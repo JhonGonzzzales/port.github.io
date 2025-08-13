@@ -1,68 +1,617 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mi Portafolio</title>
-<style>
-body {
-font-family: sans-serif;
-margin: 0;
-background-color: #f4f4f4;
-display: flex;
-justify-content: center;
-align-items: center;
-min-height: 100vh;
-flex-direction: column;
-color: #333;
-}
-
-    .hero {
-        text-align: center;
-        padding: 40px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .hero-title {
-        font-size: 2.5em;
-        margin-bottom: 10px;
-        opacity: 0; /* Inicialmente invisible */
-        transform: translateY(-20px); /* Inicialmente desplazado hacia arriba */
-        animation: slideIn 1s ease-out forwards 0.5s; /* Animación al cargar */
-    }
-
-    .hero-subtitle {
-        font-size: 1.2em;
-        color: #777;
-        opacity: 0; /* Inicialmente invisible */
-        animation: fadeIn 1.5s ease-in forwards 1.5s; /* Animación después del título */
-    }
-
-    @keyframes slideIn {
-        to {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Creativo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #3a86ff;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e8c08629-e8b3-46fb-aac5-a5aa61fa4946.png') center/cover;
+            opacity: 0.2;
+        }
+        
+        .hero-content {
+            z-index: 1;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.5s ease;
+        }
+        
+        .avatar:hover {
+            transform: scale(1.05);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            bottom: -10px;
+            left: 0;
+            border-radius: 2px;
+        }
+        
+        .skill-circle {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            margin: 0 auto;
+        }
+        
+        .skill-circle:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+        
+        .project-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover .project-img {
+            transform: scale(1.05);
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+        
+        .overlay {
+            background-color: rgba(26, 26, 46, 0.8);
+            width: 100%;
+            height: 100%;
+        }
+        
+        .contact-input {
+            border-bottom: 2px solid #ddd;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-input:focus {
+            border-bottom-color: var(--primary);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(58, 134, 255, 0.4);
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px);
+            background: var(--primary);
+            color: white;
+        }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-element.delay-1 {
+            animation-delay: 1s;
+        }
+        
+        .floating-element.delay-2 {
+            animation-delay: 2s;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .animate-on-scroll.show {
             opacity: 1;
             transform: translateY(0);
         }
-    }
-
-    @keyframes fadeIn {
-        to {
-            opacity: 1;
+        
+        @media (max-width: 768px) {
+            .hero {
+                text-align: center;
+                padding-top: 100px;
+            }
+            
+            .parallax {
+                background-attachment: scroll;
+            }
         }
-    }
-</style>
+    </style>
 </head>
 <body>
-<div class="hero">
-<h1 class="hero-title">¡Hola, soy JH!</h1>
-<p class="hero-subtitle">Actualmente estudiando.</p>
-</div>
+    <!-- Navbar -->
+    <nav class="fixed w-full bg-white bg-opacity-90 shadow-sm z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-gray-800 hover:text-indigo-600 transition-colors duration-300">
+                Port<span class="text-indigo-600">folio</span>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="text-gray-700 hover:text-indigo-600 transition-colors duration-300">Inicio</a>
+                <a href="#about" class="text-gray-700 hover:text-indigo-600 transition-colors duration-300">Sobre Mí</a>
+                <a href="#skills" class="text-gray-700 hover:text-indigo-600 transition-colors duration-300">Habilidades</a>
+                <a href="#projects" class="text-gray-700 hover:text-indigo-600 transition-colors duration-300">Proyectos</a>
+                <a href="#contact" class="text-gray-700 hover:text-indigo-600 transition-colors duration-300">Contacto</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white w-full px-6 py-2">
+            <a href="#home" class="block py-2 text-gray-700 hover:text-indigo-600 transition-colors duration-300">Inicio</a>
+            <a href="#about" class="block py-2 text-gray-700 hover:text-indigo-600 transition-colors duration-300">Sobre Mí</a>
+            <a href="#skills" class="block py-2 text-gray-700 hover:text-indigo-600 transition-colors duration-300">Habilidades</a>
+            <a href="#projects" class="block py-2 text-gray-700 hover:text-indigo-600 transition-colors duration-300">Proyectos</a>
+            <a href="#contact" class="block py-2 text-gray-700 hover:text-indigo-600 transition-colors duration-300">Contacto</a>
+        </div>
+    </nav>
 
-<script>
-    // No se necesita JavaScript adicional para estas animaciones puramente CSS
-</script>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container mx-auto px-6">
+            <div class="hero-content text-white text-center md:text-left">
+                <div class="floating-element mb-8 mx-auto md:mx-0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/779ea678-7936-4164-a249-f89393d40099.png" alt="Retrato profesional del desarrollador con fondo desenfocado" class="avatar">
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">Hola, Soy <span class="text-accent">[Tu Nombre]</span></h1>
+                <p class="text-xl md:text-2xl mb-8">Desarrollador Full Stack & Diseñador UI/UX</p>
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                    <a href="#projects" class="btn-primary">Ver Proyectos</a>
+                    <a href="#contact" class="bg-white text-indigo-600 px-6 py-3 rounded-full font-medium shadow-lg hover:bg-gray-100 transition-all duration-300">Contactarme</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-16 section-title">Sobre Mí</h2>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 animate-on-scroll">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8455b898-9009-4733-8aaf-c223c6bf37c5.png" alt="Persona trabajando en computadora portátil en una cafetería moderna" class="rounded-lg shadow-xl w-full">
+                </div>
+                <div class="md:w-1/2 animate-on-scroll">
+                    <h3 class="text-2xl font-bold mb-4">Una pasión por crear soluciones digitales</h3>
+                    <p class="text-gray-600 mb-6">Soy un apasionado desarrollador con más de 5 años de experiencia creando aplicaciones web y móviles innovadoras. Mi enfoque combina habilidades técnicas sólidas con un diseño centrado en el usuario.</p>
+                    <p class="text-gray-600 mb-8">Me especializo en JavaScript, React, Node.js y diseño de interfaces intuitivas. Cuando no estoy codificando, disfruto compartir conocimientos a través de tutoriales y contribuir a proyectos de código abierto.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="bg-gray-100 px-4 py-2 rounded-full flex items-center">
+                            <span class="w-2 h-2 bg-indigo-600 rounded-full mr-2"></span>
+                            <span>Disponible para freelance</span>
+                        </div>
+                        <div class="bg-gray-100 px-4 py-2 rounded-full flex items-center">
+                            <span class="w-2 h-2 bg-indigo-600 rounded-full mr-2"></span>
+                            <span>+50 Proyectos completados</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-16 section-title">Mis Habilidades</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
+                <!-- Skill 1 -->
+                <div class="animate-on-scroll">
+                    <div class="skill-circle mb-4">
+                        <i class="fab fa-html5 text-4xl text-orange-500"></i>
+                    </div>
+                    <h3 class="text-center font-medium">HTML5</h3>
+                </div>
+                <!-- Skill 2 -->
+                <div class="animate-on-scroll delay-1">
+                    <div class="skill-circle mb-4">
+                        <i class="fab fa-css3-alt text-4xl text-blue-500"></i>
+                    </div>
+                    <h3 class="text-center font-medium">CSS3</h3>
+                </div>
+                <!-- Skill 3 -->
+                <div class="animate-on-scroll delay-2">
+                    <div class="skill-circle mb-4">
+                        <i class="fab fa-js text-4xl text-yellow-500"></i>
+                    </div>
+                    <h3 class="text-center font-medium">JavaScript</h3>
+                </div>
+                <!-- Skill 4 -->
+                <div class="animate-on-scroll">
+                    <div class="skill-circle mb-4">
+                        <i class="fab fa-react text-4xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-center font-medium">React</h3>
+                </div>
+                <!-- Skill 5 -->
+                <div class="animate-on-scroll delay-1">
+                    <div class="skill-circle mb-4">
+                        <i class="fab fa-node-js text-4xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-center font-medium">Node.js</h3>
+                </div>
+                <!-- Skill 6 -->
+                <div class="animate-on-scroll delay-2">
+                    <div class="skill-circle mb-4">
+                        <i class="fas fa-database text-4xl text-indigo-500"></i>
+                    </div>
+                    <h3 class="text-center font-medium">MongoDB</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-16 section-title">Mis Proyectos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card animate-on-scroll">
+                    <div class="overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/afa16eb5-3334-4ec4-824c-0712324fac3d.png" alt="Dashboard de analítica con gráficos y métricas en tonos azules" class="project-img">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Plataforma Analítica</h3>
+                        <p class="text-gray-600 mb-4">Dashboard interactivo para visualización de datos con gráficos en tiempo real.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">React</span>
+                            <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">D3.js</span>
+                            <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">Node.js</span>
+                        </div>
+                        <a href="#" class="text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-300">Ver Detalles →</a>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="project-card animate-on-scroll delay-1">
+                    <div class="overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/61db4ce2-f9ed-4a3a-bd62-dfc235d435e6.png" alt="Aplicación móvil de e-commerce mostrando productos de moda" class="project-img">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Tienda Online</h3>
+                        <p class="text-gray-600 mb-4">Plataforma de e-commerce con sistema de pago integrado y carrito de compras.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">Vue.js</span>
+                            <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">Firebase</span>
+                            <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">Stripe</span>
+                        </div>
+                        <a href="#" class="text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-300">Ver Detalles →</a>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="project-card animate-on-scroll delay-2">
+                    <div class="overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/524b66cc-18aa-4586-bb4e-42d136a3e83c.png" alt="Interfaz de app de redes sociales con perfiles y publicaciones" class="project-img">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Red Social</h3>
+                        <p class="text-gray-600 mb-4">Aplicación para compartir intereses con mensajería en tiempo real.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">React Native</span>
+                            <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">GraphQL</span>
+                            <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">MongoDB</span>
+                        </div>
+                        <a href="#" class="text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-300">Ver Detalles →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12 animate-on-scroll">
+                <a href="#" class="inline-block bg-gray-100 hover:bg-gray-200 px-6 py-3 rounded-full font-medium transition-all duration-300">
+                    Ver Todos los Proyectos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Section -->
+    <section class="parallax py-32 text-white">
+        <div class="overlay">
+            <div class="container mx-auto px-6 flex flex-col items-center justify-center h-full text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 animate-on-scroll">¿Listo para llevar tu proyecto al siguiente nivel?</h2>
+                <p class="text-xl mb-8 max-w-2xl animate-on-scroll delay-1">Trabajemos juntos para crear algo increíble. Cuéntame sobre tu idea y cómo puedo ayudarte a hacerla realidad.</p>
+                <a href="#contact" class="btn-primary animate-on-scroll delay-2">Comenzar Proyecto</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-16 section-title">Contáctame</h2>
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2 animate-on-scroll">
+                    <h3 class="text-2xl font-bold mb-6">Información de Contacto</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-envelope text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-1">Correo Electrónico</h4>
+                                <p class="text-gray-600">contacto@ejemplo.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-phone-alt text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-1">Teléfono</h4>
+                                <p class="text-gray-600">+1 (123) 456-7890</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-map-marker-alt text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-1">Ubicación</h4>
+                                <p class="text-gray-600">Ciudad, País</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold mt-10 mb-6">Redes Sociales</h3>
+                    <div class="flex">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 animate-on-scroll delay-1">
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block mb-2 font-medium">Nombre Completo</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 contact-input focus:outline-none" placeholder="Tu nombre">
+                        </div>
+                        <div>
+                            <label for="email" class="block mb-2 font-medium">Correo Electrónico</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 contact-input focus:outline-none" placeholder="tu@email.com">
+                        </div>
+                        <div>
+                            <label for="subject" class="block mb-2 font-medium">Asunto</label>
+                            <input type="text" id="subject" class="w-full px-4 py-3 contact-input focus:outline-none" placeholder="¿En qué puedo ayudarte?">
+                        </div>
+                        <div>
+                            <label for="message" class="block mb-2 font-medium">Mensaje</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 contact-input focus:outline-none" placeholder="Describe tu proyecto o consulta"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col items-center">
+                <a href="#" class="text-2xl font-bold mb-6">Port<span class="text-indigo-400">folio</span></a>
+                <p class="text-gray-400 text-center mb-8 max-w-md">Desarrollador Full Stack especializado en crear soluciones digitales innovadoras y experiencias de usuario excepcionales.</p>
+                <div class="flex mb-8">
+                    <a href="#" class="social-icon bg-gray-800 hover:bg-indigo-600 mx-2">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-gray-800 hover:bg-blue-600 mx-2">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-gray-800 hover:bg-blue-400 mx-2">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-gray-800 hover:bg-pink-500 mx-2">
+                        <i class="fab fa-dribbble"></i>
+                    </a>
+                </div>
+                <p class="text-gray-500">© 2023 Mi Portafolio. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+        
+        // Scroll animation
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Navbar scroll effect
+        const navbar = document.querySelector('nav');
+        let lastScrollY = window.scrollY;
+        
+        window.addEventListener('scroll', () => {
+            if (lastScrollY < window.scrollY && window.scrollY > 100) {
+                navbar.classList.add('-translate-y-full');
+            } else {
+                navbar.classList.remove('-translate-y-full');
+            }
+            
+            lastScrollY = window.scrollY;
+            
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.classList.remove('bg-opacity-90');
+                navbar.classList.add('bg-opacity-95');
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.classList.remove('bg-opacity-95');
+                navbar.classList.add('bg-opacity-90');
+            }
+        });
+        
+        // Form submission
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Gracias por tu mensaje. Te responderé lo antes posible.');
+                form.reset();
+            });
+        }
+    </script>
 </body>
 </html>
+
